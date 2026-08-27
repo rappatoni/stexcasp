@@ -1,11 +1,14 @@
-# Mgraph
+# stexcasp
 
-Mgraph queries a FLAMS server for the concepts referenced by definitions,
-computes their dependency closure, removes only depth-first-search back edges
-and self-loops, and serves the resulting DAG as an interactive D3 graph. Nodes
-are arranged in horizontal levels by their smallest number of dependency steps
-from the root. Selecting a node loads its rendered definition paragraph from
-FLAMS into a side panel.
+`stexcasp` turns semantic definition dependencies from a FLAMS ontology into
+executable s(CASP)/Prolog scaffolding. The repository also provides `mgraph`,
+an interactive viewer for inspecting the same dependency graph and its
+definition paragraphs.
+
+Both commands compute the dependency closure and remove only depth-first-search
+back edges and self-loops. The viewer arranges the resulting DAG in horizontal
+levels by shortest distance from the root. Selecting a node loads its rendered
+definition paragraph from FLAMS into a side panel.
 
 Tree, forward, and cross edges are retained. In particular, diamond structures
 remain intact.
@@ -20,8 +23,8 @@ The Python program itself has no third-party runtime dependencies.
 
 ## Definitions
 
-After retrieving the closure, Mgraph resolves the exact semantic paragraph
-URIs connected to every included symbol by `ulo:defines`. Definition bodies
+After retrieving the closure, the graph viewer resolves the exact semantic
+paragraph URIs connected to every included symbol by `ulo:defines`. Definition bodies
 are fetched lazily from FLAMS through `/content/fragment` when a node is
 selected. The returned semantic HTML and its CSS are rendered in an isolated
 side panel, so initial graph loading does not require one HTTP request per
@@ -29,12 +32,12 @@ node.
 
 If several matching definition paragraphs exist, the panel provides a
 selector. Missing or temporarily unavailable fragments do not prevent the
-graph from loading. Because fragments are served through Mgraph's localhost
+graph from loading. Because fragments are served through the viewer's localhost
 proxy, definition loading is available while the local server is running; a
 saved HTML file opened directly still contains the graph and definition URIs,
 but cannot fetch the bodies by itself.
 
-## Run directly
+## Run the interactive graph viewer
 
 From the repository root:
 
@@ -42,7 +45,7 @@ From the repository root:
 python3 -m mgraph 'https://mathhub.info/?uri=http%3A%2F%2Fmathhub.info%3Fa%3DJLogic%2Fsmglol%2FCommercial-Law%26p%3Dmod%26m%3DKaufmann%26s%3DKaufmann'
 ```
 
-Mgraph chooses a free localhost port and opens the graph in the default
+`mgraph` chooses a free localhost port and opens the graph in the default
 browser. Stop the server with `Ctrl-C`.
 
 Raw FTML URIs are accepted as well:
@@ -51,15 +54,17 @@ Raw FTML URIs are accepted as well:
 python3 -m mgraph 'http://mathhub.info?a=JLogic/smglol/Commercial-Law&p=mod&m=Kaufmann&s=Kaufmann'
 ```
 
-## Install the command
+## Install the commands
 
 ```sh
+git clone https://github.com/rappatoni/stexcasp.git
+cd stexcasp
 python3 -m venv .venv
 .venv/bin/pip install -e .
-.venv/bin/mgraph '<URI-or-MathHub-link>'
+.venv/bin/stexcasp '<URI-or-MathHub-link>' --output program.pl
 ```
 
-The installation also provides the `stexcasp` exporter described below.
+The installation also provides `.venv/bin/mgraph` for the interactive viewer.
 
 ## Query a local FLAMS server
 
@@ -85,7 +90,7 @@ the complete scoped closure.
 
 ## Scoping
 
-By default Mgraph:
+By default both commands:
 
 1. derives an archive-family prefix by removing the last component of the
    root's `a=` value; and
