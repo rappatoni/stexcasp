@@ -3,19 +3,30 @@
 % Edges point from a concept to the concepts used by its definition.
 
 #pred not_implemented(Predicate, Arity, X) :: '@(Predicate)/@(Arity) is not implemented for @(X)'.
-#pred court(X) :: 'A @(X) is a constitutionally guaranteed, state-established institution and the judicial branch entrusted with the authoritative exercise of judicial power. @(X) are primarily organized in judicial panels. @(X) serve to enforce law and order in relations between citizens, between citizens and the state, and between states. This enforcement is primarily achieved –— with the exception of criminal proceedings –— through judicial or extrajudicial dispute resolution, i.e., trhough litigation and arbitration.'.
-#pred eu(X) :: 'The @(X) (@(X)) is a unique supranational, political and economic union of 27 member states that are primarily lovated in Europe. The member states have agreed to cooperate and share sovereignty in key areas through a system of supranational governance.'.
-#pred government(X) :: 'A @(X) is the system or group of people governing an organized community, generally a state, it normally consists of legislature, executive, and judiciary.'.
-#pred identity(X) :: 'An @(X) Identität refers to certain facts or properties, i.e., the set of qualities, beliefs, personality traits, appearance, or expressions who or what characterizes — we say identify a person. Herethrough, this Person is assigned a property by which this Person distinguishes itself from other persons Person.'.
-#pred judiciary(X) :: 'The @(X) (also known as the @(X), @(X), @(X), @(X), and @(X) or @(X)) is the system of courts that adjudicates legal disputes/disagreements and interprets, defends, and applies the law in legal cases.'.
-#pred law(X) :: 'The law is a set of rules that are created and are enforceable by social or governmental institutions to regulate behavior. The law is usually given as a set of @(X): documents that codify these rules. If a subject matter relates to the system of law governing a society, it is called a legal subject matter.'.
-#pred legal(X) :: 'The law is a set of rules that are created and are enforceable by social or governmental institutions to regulate behavior. The law is usually given as a set of laws: documents that codify these rules. If a subject matter relates to the system of law governing a society, it is called a @(X) subject matter.'.
-#pred member_state(X) :: 'A @(X) is a sovereign country that has voluntarily joined the EU and agreed to abide by its treaties, laws, and institutions.'.
-#pred person(X) :: '@(X) sind Rechtssubjekte, die ihre Rechtsfähigkeit von der jeweiligen Rechtsordnung erhalten haben und am Rechtsverkehr teilnehmen können. Jede @(X) besitzt ihre eigenen Rechte und Pflichte.'.
-#pred polity(X) :: 'A @(X) (@(X)) is a group of people with a collective identity, who are organized by some form of political institutionalized social relations, and have a capacity to mobilize resources.'.
-#pred state(X) :: 'A @(X) is a political entity that regulates society and the population within a definite territory. Government is considered to form the fundamental apparatus of contemporary states.'.
-#pred supranational_union(X) :: 'A @(X) is a type of international organization and political union that is empowered to directly exercise some of the powers and functions otherwise reserved to sovereign states.'.
-#pred territory(X) :: 'A @(X) is an area of land, sea, or space, belonging or connected to a particular state, person, or animal.'.
+#pred belief(X) :: '@(X): http://mathhub.info?a=smglom/epistemology&p=mod&m=belief&s=belief'.
+#pred court(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Procedural-Law&p=mod&m=court&s=court'.
+#pred economic_union(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Public-International-Law&p=mod&m=economic-union&s=economic%20union'.
+#pred eu(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/European-Union-Law&p=mod&m=EU&s=EU'.
+#pred executive(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=executive&s=executive'.
+#pred federal(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Public-International-Law&p=mod&m=political-union&s=federal'.
+#pred government(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=government&s=government'.
+#pred identity(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Personal-Data-Protection-Law&p=mod/personal-data&m=identity&s=identity'.
+#pred judiciary(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=judiciary&s=judiciary'.
+#pred law(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Philosophy&p=mod&m=law&s=law'.
+#pred legal(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Philosophy&p=mod&m=law&s=legal'.
+#pred legislature(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=legislature&s=legislature'.
+#pred member(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Public-International-Law&p=mod&m=political-union&s=member'.
+#pred member_state(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/European-Union-Law&p=mod&m=member-state&s=member%20state'.
+#pred organization(X) :: '@(X): http://mathhub.info?a=smglom/orga&p=mod&m=organization&s=organization'.
+#pred person(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-General-Terms&p=mod&m=person&s=person'.
+#pred policy(X) :: '@(X): http://mathhub.info?a=smglom/search&p=mod&m=policy&s=policy'.
+#pred political_union(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Public-International-Law&p=mod&m=political-union&s=political%20union'.
+#pred polity(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=polity&s=polity'.
+#pred set(X) :: '@(X): http://mathhub.info?a=smglom/sets&p=mod&m=set&s=set'.
+#pred state(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=state&s=state'.
+#pred supranational_union(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=supranational-union&s=supranational%20union'.
+#pred territory(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Legal-Theory-of-the-State&p=mod&m=territory&s=territory'.
+#pred trade_bloc(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Public-International-Law&p=mod&m=trade-bloc&s=trade%20bloc'.
 
 % eu/1 <- http://mathhub.info?a=JLogic/smglol/European-Union-Law&p=mod&m=EU&s=EU
 eu(X) :-

@@ -51,6 +51,10 @@ with `--max-depth 2`.
 
 [![Generated s(CASP) code skeleton for Gesellschafter](docs/images/gesellschafter-code.jpg)](docs/images/gesellschafter-code.jpg)
 
+### Default symbol-URI predicate verbalizations
+
+[![Generated URI-based predicate verbalizations for Gesellschafter](docs/images/gesellschafter-uri-preds.jpg)](docs/images/gesellschafter-uri-preds.jpg)
+
 ## Run the interactive graph viewer
 
 From the repository root:
@@ -206,23 +210,33 @@ If `--output` is omitted, the root predicate name is used, such as
 non-alphanumeric runs replaced by underscores. Name collisions receive stable
 numeric suffixes.
 
-Add semantic definition paragraphs as s(CASP) natural-language predicate
-patterns with `--verbalizations`:
+Every generated predicate has a `#pred` verbalization containing its full
+symbol URI by default:
+
+```prolog
+#pred kaufmann(X) :: '@(X): http://mathhub.info?a=JLogic/smglol/Commercial-Law&p=mod&m=Kaufmann&s=Kaufmann'.
+```
+
+This keeps the generated model traceable to the original ontology without
+fetching definition fragments. Add the semantic definition text with
+`--definitions`:
 
 ```sh
-stexcasp '<URI-or-link>' --verbalizations --output kaufmann.pl
+stexcasp '<URI-or-link>' --definitions --output kaufmann.pl
 ```
 
 This produces directives of the form:
 
 ```prolog
-#pred kaufmann(X) :: 'A @(X) is a person who operates a commercial business.'.
+#pred kaufmann(X) :: 'http://mathhub.info?a=JLogic/smglol/Commercial-Law&p=mod&m=Kaufmann&s=Kaufmann: A @(X) is a person who operates a commercial business.'.
 ```
 
-The FTML definiendum is replaced by `@(X)`, matching the argument of the unary
-predicate. When several matching paragraphs exist, the first URI in
-lexicographic order is used. Fragment failures are reported as warnings and do
-not prevent generation of the remaining program.
+The URI remains at the start of the verbalization, while the FTML definiendum
+is replaced by `@(X)`, matching the argument of the unary predicate. When
+several matching paragraphs exist, the first URI in lexicographic order is
+used. Fragment failures are reported as warnings and do not prevent generation
+of the remaining program. The former `--verbalizations` flag remains available
+as a deprecated alias for `--definitions`.
 
 ## Tests
 

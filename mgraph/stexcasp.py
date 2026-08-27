@@ -27,9 +27,14 @@ def parser() -> argparse.ArgumentParser:
     result.add_argument("uri", help="Raw FTML URI or MathHub viewer link")
     result.add_argument("-o", "--output", type=Path)
     result.add_argument(
+        "--definitions",
         "--verbalizations",
+        dest="definitions",
         action="store_true",
-        help="Add #pred verbalizations derived from definition paragraphs",
+        help=(
+            "Append definition text to the default symbol-URI #pred "
+            "verbalizations (--verbalizations is a deprecated alias)"
+        ),
     )
     result.add_argument(
         "--server",
@@ -51,7 +56,7 @@ def parser() -> argparse.ArgumentParser:
     return result
 
 
-def _fetch_verbalizations(
+def _fetch_definitions(
     client: FlamsClient,
     nodes: frozenset[str],
     *,
@@ -117,8 +122,8 @@ def run(arguments: argparse.Namespace) -> int:
     )
     graph = eliminate_dfs_back_edges(root, closure.nodes, closure.edges)
     definitions: dict[str, DefinitionFragment] = {}
-    if arguments.verbalizations:
-        definitions, warnings = _fetch_verbalizations(
+    if arguments.definitions:
+        definitions, warnings = _fetch_definitions(
             client,
             graph.nodes,
             scope_prefix=scope,
@@ -134,7 +139,8 @@ def run(arguments: argparse.Namespace) -> int:
     output.write_text(render_scasp(graph, definitions=definitions), encoding="utf-8")
     print(
         f"Wrote {output.resolve()} ({len(graph.nodes)} predicates, "
-        f"{len(graph.edges)} dependencies, {len(definitions)} verbalizations)"
+        f"{len(graph.edges)} dependencies, {len(graph.nodes)} URI "
+        f"verbalizations, {len(definitions)} with definitions)"
     )
     return 0
 

@@ -126,6 +126,15 @@ def definition_verbalization(fragment_html: str, symbol_uri: str) -> str:
     return text
 
 
+def symbol_verbalization(
+    symbol_uri: str, definition: DefinitionFragment | None = None
+) -> str:
+    """Render a URI-first predicate verbalization, optionally with its definition."""
+    if definition is None:
+        return f"@(X): {symbol_uri}"
+    return f"{symbol_uri}: {definition_verbalization(definition.html, symbol_uri)}"
+
+
 def _quoted_atom(value: str) -> str:
     return "'" + value.replace("\\", "\\\\").replace("'", "''") + "'"
 
@@ -151,13 +160,10 @@ def render_scasp(
         "#pred not_implemented(Predicate, Arity, X) :: "
         "'@(Predicate)/@(Arity) is not implemented for @(X)'.",
     ]
-    for uri in sorted(definitions, key=lambda item: (names[item], item)):
-        if uri not in names:
-            continue
-        wording = definition_verbalization(definitions[uri].html, uri)
+    for uri in sorted(graph.nodes, key=lambda item: (names[item], item)):
+        wording = symbol_verbalization(uri, definitions.get(uri))
         lines.append(f"#pred {names[uri]}(X) :: {_quoted_atom(wording)}.")
-    if definitions:
-        lines.append("")
+    lines.append("")
 
     order = [graph.root] + sorted(
         graph.nodes - {graph.root}, key=lambda uri: (names[uri], uri)

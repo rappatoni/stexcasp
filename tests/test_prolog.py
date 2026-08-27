@@ -7,6 +7,7 @@ from mgraph.prolog import (
     predicate_names,
     prologify,
     render_scasp,
+    symbol_verbalization,
 )
 
 
@@ -39,6 +40,16 @@ class RenderingTests(unittest.TestCase):
     def test_renders_clauses_leaves_and_root_query(self) -> None:
         program = render_scasp(self.graph)
         self.assertIn(
+            "#pred root_node(X) :: "
+            "'@(X): http://example.test?m=M&s=Root Node'.",
+            program,
+        )
+        self.assertIn(
+            "#pred child_one(X) :: "
+            "'@(X): http://example.test?m=M&s=Child One'.",
+            program,
+        )
+        self.assertIn(
             "root_node(X) :-\n"
             "    child_one(X),\n"
             "    child_two(X),\n"
@@ -68,7 +79,20 @@ class RenderingTests(unittest.TestCase):
         )
         program = render_scasp(self.graph, definitions={self.a: fragment})
         self.assertIn(
-            "#pred root_node(X) :: 'A @(X) uses children.'.", program
+            "#pred root_node(X) :: "
+            "'http://example.test?m=M&s=Root Node: A @(X) uses children.'.",
+            program,
+        )
+        self.assertIn(
+            "#pred child_one(X) :: "
+            "'@(X): http://example.test?m=M&s=Child One'.",
+            program,
+        )
+
+    def test_symbol_verbalization_escapes_no_information(self) -> None:
+        self.assertEqual(
+            symbol_verbalization(self.a),
+            "@(X): http://example.test?m=M&s=Root Node",
         )
 
     def test_definiendum_matching_ignores_http_scheme(self) -> None:
