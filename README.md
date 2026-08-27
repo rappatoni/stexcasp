@@ -37,6 +37,20 @@ proxy, definition loading is available while the local server is running; a
 saved HTML file opened directly still contains the graph and definition URIs,
 but cannot fetch the bodies by itself.
 
+## Example: Gesellschafter
+
+The following screenshots were generated from the MathHub symbol
+[`Gesellschafter`](http://mathhub.info?a=JLogic/smglol/Corporate-Law&p=mod&m=Gesellschafter&s=Gesellschafter)
+with `--max-depth 2`.
+
+### Interactive graph and definition viewer
+
+[![Hierarchical dependency graph and definition viewer for Gesellschafter](docs/images/gesellschafter-viewer.jpg)](docs/images/gesellschafter-viewer.jpg)
+
+### Generated s(CASP) code skeleton
+
+[![Generated s(CASP) code skeleton for Gesellschafter](docs/images/gesellschafter-code.jpg)](docs/images/gesellschafter-code.jpg)
+
 ## Run the interactive graph viewer
 
 From the repository root:
