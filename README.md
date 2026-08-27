@@ -59,6 +59,8 @@ python3 -m venv .venv
 .venv/bin/mgraph '<URI-or-MathHub-link>'
 ```
 
+The installation also provides the `stexcasp` exporter described below.
+
 ## Query a local FLAMS server
 
 ```sh
@@ -143,6 +145,65 @@ that node contains `d` edges. This makes the dependency hierarchy tree-like
 without discarding cross edges or diamond structures. Because the level is
 based on the shortest path, a retained cross edge can skip levels, stay within
 a level, or point toward an earlier level.
+
+## Generate an s(CASP) program
+
+`stexcasp` retrieves and prunes the same dependency graph, then writes an
+executable `.pl` program. Each concept becomes a unary predicate. Its direct
+dependencies form the clause body. Every predicate also carries an explicit
+`not_implemented/3` proof obligation, including non-leaves:
+
+```prolog
+kaufmann(X) :-
+    firma(X),
+    handelsgewerbe(X),
+    handelsregister(X),
+    person(X),
+    not_implemented(kaufmann, 1, X).
+
+firma(X) :- not_implemented(firma, 1, X).
+
+not_implemented(kaufmann, 1, _).
+not_implemented(firma, 1, _).
+% ...one axiom for every generated predicate...
+
+?- kaufmann(X), not_implemented(Node, Arity, X).
+```
+
+The combined query requests a model for the root and also binds `Node` and
+`Arity` to an open implementation obligation. Because these markers are part
+of the object program rather than host-language exceptions, s(CASP) retains
+them in its model and justification instead of collapsing the result to “no
+models”.
+
+Run it as follows:
+
+```sh
+stexcasp '<URI-or-link>' --max-depth 3 --output kaufmann.pl
+```
+
+If `--output` is omitted, the root predicate name is used, such as
+`kaufmann.pl`. Symbol names are converted to lower-case Prolog atoms, with
+non-alphanumeric runs replaced by underscores. Name collisions receive stable
+numeric suffixes.
+
+Add semantic definition paragraphs as s(CASP) natural-language predicate
+patterns with `--verbalizations`:
+
+```sh
+stexcasp '<URI-or-link>' --verbalizations --output kaufmann.pl
+```
+
+This produces directives of the form:
+
+```prolog
+#pred kaufmann(X) :: 'A @(X) is a person who operates a commercial business.'.
+```
+
+The FTML definiendum is replaced by `@(X)`, matching the argument of the unary
+predicate. When several matching paragraphs exist, the first URI in
+lexicographic order is used. Fragment failures are reported as warnings and do
+not prevent generation of the remaining program.
 
 ## Tests
 
